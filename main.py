@@ -81,11 +81,11 @@ def cadastro(user: UserRegister):
     hashed_password = pwd_context.hash(user.password)
     
     new_user = pd.DataFrame(
-        [[user.username, user.password, user.role]],
+        [[user.username, hashed_password, user.role]],
         columns=["username", "password", "role"]
     )
     df_users = pd.concat([df_users, new_user], ignore_index=True)
-    df_users.to_csv("users_csv", index=False)
+    df_users.to_csv("users.csv", index=False)
     
     return {
         "message": "Usuário cadastrado com sucesso"
