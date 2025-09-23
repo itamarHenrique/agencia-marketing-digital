@@ -1,3 +1,3 @@
 username,password,role
-user1,oeiruhn56146,admin
-user2,908ijofff,user
+user1,$2b$12$StDPzEww71TkcoRtAv7Gke.u85iPEQ/HGkMpp/2wLhyB2LJDibuHy,admin
+user2,$2b$12$EEvYXkszpoEfB/Abduz60u8KFGZqNj6BoJj85I6EeujxqWcUmcSX2,user
