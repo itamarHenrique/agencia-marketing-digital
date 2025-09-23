@@ -3,16 +3,38 @@ import pandas as pd
 from pydantic import BaseModel
 from passlib.context import CryptContext
 from jose import jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 app = FastAPI()
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+SECRET_KEY = "teste"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 df_users = pd.read_csv('users.csv')
 df_metrics = pd.read_csv('metrics.csv')
+
+def create_access_token(data: dict, expires_delta: timedelta | None = None):
+    to_encode = data.copy()
+    expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=15))
+    to_encode.update({"expira": expire.timestamp()})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
+    
+    
+class UserRegister(BaseModel):
+    username: str
+    password: str
+    role: str = "user"
+
 
 @app.get('/')
 def read_root():
@@ -27,15 +49,6 @@ def saudacao(nome: str):
 }
     
     
-class UserLogin(BaseModel):
-    username: str
-    password: str
-    
-    
-class UserRegister(BaseModel):
-    username: str
-    password: str
-    role: str = "user"
 
 @app.post("/login")
 def login(user: UserLogin):
@@ -51,10 +64,14 @@ def login(user: UserLogin):
     
     role = user_data['role'].iloc[0]
     
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    acces_token = create_access_token(data={"sub": user.username, "role": role}, expires_delta=access_token_expires)
+    
     return {
-        "message": "Login bem-sucedido", "role": role
-        }
-
+        "access_token": acces_token, "token_type": "bearer"
+    }
+    
+    
 @app.post("/register")
 def cadastro(user: UserRegister):
     global df_users
