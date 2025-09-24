@@ -23,15 +23,15 @@ df_metrics = pd.read_csv('metrics.csv')
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=15))
-    to_encode.update({"expira": expire.timestamp()})
+    to_encode.update({"exp": expire.timestamp()})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username = payload.get("sub")
-        role = payload.get("role")
+        username: str = payload.get("sub")
+        role: str = payload.get("role")
         if username is None or role is None:
             raise HTTPException(status_code=401, detail="Credenciais invalidas")
         return {"username": username, "role": role}
@@ -110,8 +110,10 @@ def pegar_metricas(current_user: dict = Depends(get_current_user)):
     if current_user['role'] != 'admin':
         raise HTTPException(status_code=403, detail="Acesso negado")
     
+    metrics_preview = df_metrics.head(50).to_dict(orient="records")
+    
     return {
         "message": f"Bem-vindo {current_user['username']}!",
         "role": current_user['role'],
-        "metrics": df_metrics.to_dict(orient="records")
+        "metrics": metrics_preview
     }
