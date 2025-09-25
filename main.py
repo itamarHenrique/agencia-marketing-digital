@@ -106,11 +106,11 @@ def cadastro(user: UserRegister):
     
     
 @app.get("/metrics")
-def pegar_metricas(current_user: dict = Depends(get_current_user)):
+def pegar_metricas(paginate: int = 0, limit: int = 100, current_user: dict = Depends(get_current_user)):
     if current_user['role'] != 'admin':
         raise HTTPException(status_code=403, detail="Acesso negado")
     
-    metrics_preview = df_metrics.head(50).to_dict(orient="records")
+    metrics_preview = df_metrics.iloc[paginate: paginate + limit].to_dict(orient="records")
     
     return {
         "message": f"Bem-vindo {current_user['username']}!",
