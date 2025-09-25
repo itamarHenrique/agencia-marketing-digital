@@ -1,3 +1,6 @@
 username,password,role
-user1,oeiruhn56146,admin
-user2,908ijofff,user
+user1,$2b$12$StDPzEww71TkcoRtAv7Gke.u85iPEQ/HGkMpp/2wLhyB2LJDibuHy,admin
+user2,$2b$12$EEvYXkszpoEfB/Abduz60u8KFGZqNj6BoJj85I6EeujxqWcUmcSX2,user
+teste,123456,user
+teste1,$2b$12$w.urkEFB/7GmvLnQZvPzCu4Rb7aTcP6sC6Zi.Mg9YTGLLjysnB.bG,user
+admin,$2b$12$cFV1LwY3ZSHxfvH3y6HG1.WZxTwtDBzxYM2wYhRp1QdeGLocdslku,admin
