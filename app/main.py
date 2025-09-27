@@ -15,7 +15,15 @@ app = FastAPI(
     version="1.0.0"
 )
 
-app.mount("/", StaticFiles(directory="frontend", html=True), name="static")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  #origem do meu front-end ou o dominio do site
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.mount("/frontend", StaticFiles(directory="frontend", html=True), name="static")
 
 app.include_router(auth_router, prefix="/autenticar", tags=["Autenticação"])
 app.include_router(metrics_router, prefix="/dados", tags=["Métricas"])

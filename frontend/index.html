@@ -6,6 +6,72 @@
     <title>Document</title>
 </head>
 <body>
-    TEste
+    <div class="container">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Usuário">
+        <input type="password" id="login-password" placeholder="Senha">
+        <button onclick="login()">Entrar</button>
+    
+        <h2>Cadastrar</h2>
+        <input type="text" id="register-username" placeholder="Usuário">
+        <input type="password" id="register-password" placeholder="Senha">
+        <select id="register-role">
+            <option value="user">Usuário</option>
+            <option value="admin">Administrador</option>
+        </select>
+        <button onclick="cadastrar()">Cadastrar</button>
+    </div>
+
+    <script>
+
+        const API_URL = 'http://127.0.0.1:8000';
+
+
+        async function login() {
+            const username = document.getElementById("login-username").value;
+            const password = document.getElementById("login-password").value;
+
+            const res = await fetch(`${API_URL}/autenticar/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                alert("Login realizado com sucesso!");
+                localStorage.setItem("token", data.access_token);
+                localStorage.setItem("role", data.role);
+
+                window.location.href = 'metricas.html';
+            } else {
+                alert(data.detail || "Erro no login");
+            }
+        }
+
+
+
+
+        async function cadastrar() {
+        const username = document.getElementById("register-username").value;
+        const password = document.getElementById("register-password").value;
+        const role = document.getElementById("register-role").value;
+
+        const res = await fetch(`${API_URL}/autenticar/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password, role })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+            alert(data.message);
+        } else {
+            alert(data.detail || "Erro no registro");
+        }
+        }
+
+
+    </script>
 </body>
 </html>
