@@ -63,7 +63,7 @@
     let role = localStorage.getItem("role");
 
     let paginate = 0;
-    const limit = 10;
+    const limit = 20;
     let currentPage = 1;
     let metricsData = [];
     let currentSort = { column: null, asc: true };
@@ -93,7 +93,7 @@
           role = data.role; // atualiza papel
           welcome.textContent = `${data.message} | Papel: ${data.role}`;
 
-          // Atualiza título conforme o papel
+          // Atualiza título conforme o papel do que fez login
           document.getElementById("titulo-painel").textContent =
             role === "admin" ? "Painel de Métricas (Admin)" : "Painel de Métricas (Usuário)";
 
@@ -121,10 +121,11 @@
         <thead class="table-dark"><tr>`;
 
       Object.keys(data[0]).forEach(col => {
-        if (col === "cost_micros" && role !== "admin") return; // oculta para usuário
-        const arrow = currentSort.column === col
-          ? (currentSort.asc ? " ↑" : " ↓")
-          : "";
+        if (col === "cost_micros" && role !== "admin") return; // oculta para usuário o cost_micros
+        let arrow = "";
+        if (currentSort.column === col) {
+          arrow = currentSort.asc ? " ↑" : " ↓";
+        }
         table += `<th onclick="sortTable('${col}')">${col}${arrow}</th>`;
       });
 
