@@ -28,4 +28,4 @@ app.include_router(metrics_router, prefix="/dados", tags=["Métricas"])
 
 @app.get("/")
 def read_root():
-    return {"message": "API está rodando!"}
+    return {"message": 'API está rodando! Para mostrar o front-end coloque apenas no final da URL "/frontend"'}
