@@ -3,8 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
 
-
-
 # Aqui está importando as rotas da metrica e da autenticação do usuario
 from app.routes.auth import router as auth_router
 from app.routes.metrics import router as metrics_router
