@@ -43,6 +43,6 @@ Após iniciar o servidor, abra no navegador:
 
 http://127.0.0.1:8000/frontend
 
-
+***⚠️ Importante***: o ***/frontend*** precisa estar no final da URL, caso contrário o navegador não carregará corretamente a interface do sistema.
 
 ---
