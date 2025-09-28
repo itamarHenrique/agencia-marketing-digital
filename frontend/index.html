@@ -9,70 +9,40 @@
 </head>
 <body class="bg-light">
 
-  <!-- Container centralizado verticalmente -->
-  <div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="row w-100">
-      
-      <!-- Card de Login -->
-      <div class="col-md-6 mb-4">
-        <div class="card shadow rounded-4">
-          <div class="card-body">
-            <h3 class="card-title text-center mb-4">Login</h3>
-            
-            <!-- Campo Usuário -->
-            <div class="mb-3">
-              <label for="login-username" class="form-label">Usuário</label>
-              <input type="text" id="login-username" class="form-control" placeholder="Digite seu usuário">
-            </div>
-            
-            <!-- Campo Senha -->
-            <div class="mb-3">
-              <label for="login-password" class="form-label">Senha</label>
-              <input type="password" id="login-password" class="form-control" placeholder="Digite sua senha">
-            </div>
-            
-            <!-- Botão de Login -->
-            <div class="d-grid">
-              <button class="btn btn-primary btn-lg" onclick="login()">Entrar</button>
-            </div>
-          </div>
-        </div>
+  <div class="container mt-5">
+    <!-- Card de Login -->
+    <div class="card shadow p-4">
+      <h2 class="text-center mb-4">Login</h2>
+      <div class="mb-3">
+        <input type="text" class="form-control" id="login-username" placeholder="Usuário">
       </div>
+      <div class="mb-3">
+        <input type="password" class="form-control" id="login-password" placeholder="Senha">
+      </div>
+      <button class="btn btn-primary w-100 mb-2" onclick="login()">Entrar</button>
+      <button class="btn btn-outline-secondary w-100" onclick="mostrarCadastro()">Cadastrar</button>
+    </div>
+
 
       <!-- Card de Cadastro -->
-      <div class="col-md-6 mb-4">
-        <div class="card shadow rounded-4">
-          <div class="card-body">
-            <h3 class="card-title text-center mb-4">Cadastrar</h3>
-            
-            <!-- Campo Usuário -->
-            <div class="mb-3">
-              <label for="register-username" class="form-label">Usuário</label>
-              <input type="text" id="register-username" class="form-control" placeholder="Digite o nome de usuário">
-            </div>
-            
-            <!-- Campo Senha -->
-            <div class="mb-3">
-              <label for="register-password" class="form-label">Senha</label>
-              <input type="password" id="register-password" class="form-control" placeholder="Digite a senha">
-            </div>
-            
-            <!-- Seleção de Papel -->
-            <div class="mb-3">
-              <label for="register-role" class="form-label">Papel</label>
-              <select id="register-role" class="form-select">
-                <option value="user">Usuário</option>
-                <option value="admin">Administrador</option>
-              </select>
-            </div>
-            
-            <!-- Botão de Cadastro -->
-            <div class="d-grid">
-              <button class="btn btn-success btn-lg" onclick="cadastrar()">Cadastrar</button>
-            </div>
-          </div>
-        </div>
+      <div id="cadastro-container" class="card shadow p-4 mt-4 d-none">
+      <h2 class="text-center mb-4">Cadastrar</h2>
+      <div class="mb-3">
+        <input type="text" class="form-control" id="register-username" placeholder="Usuário">
       </div>
+      <div class="mb-3">
+        <input type="password" class="form-control" id="register-password" placeholder="Senha">
+      </div>
+      <div class="mb-3">
+        <select class="form-select" id="register-role">
+          <option value="user">Usuário</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </div>
+      <button class="btn btn-success w-100" onclick="cadastrar()">Cadastrar</button>
+    </div>
+  </div>
+
 
     </div>
   </div>
@@ -123,6 +93,15 @@
         alert(data.detail || "Erro no registro");
       }
     }
+
+
+    // Mostra ou esconde o formulário de cadastro
+    function mostrarCadastro() {
+      const cadastro = document.getElementById("cadastro-container");
+      cadastro.classList.toggle("d-none");
+    }
+
+
   </script>
 
   <!-- Importa scripts JS do Bootstrap -->
