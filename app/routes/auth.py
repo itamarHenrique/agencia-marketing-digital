@@ -1,10 +1,9 @@
 from fastapi import APIRouter, HTTPException
 import pandas as pd
 from datetime import timedelta
-from ..Models.model import UserLogin, UserRegister
-from ..services.security import pwd_context, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
-from ..Models.db import load_users, save_users
-
+from app.Models.model import UserLogin, UserRegister 
+from app.services.security import pwd_context, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.Models.db import load_users, save_users
 router = APIRouter()
 
 @router.post("/login")
@@ -26,7 +25,7 @@ def login(user: UserLogin):
         data={"sub": user.username, "role": role},
         expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "role": role}
 
 
 @router.post("/register")
