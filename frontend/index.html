@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistema de Login</title>
-  <!-- Bootstrap 5 -->
+  <!-- Importa o Bootstrap 5 para estilização -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
+  <!-- Container centralizado verticalmente -->
   <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="row w-100">
       
@@ -17,14 +18,20 @@
         <div class="card shadow rounded-4">
           <div class="card-body">
             <h3 class="card-title text-center mb-4">Login</h3>
+            
+            <!-- Campo Usuário -->
             <div class="mb-3">
               <label for="login-username" class="form-label">Usuário</label>
               <input type="text" id="login-username" class="form-control" placeholder="Digite seu usuário">
             </div>
+            
+            <!-- Campo Senha -->
             <div class="mb-3">
               <label for="login-password" class="form-label">Senha</label>
               <input type="password" id="login-password" class="form-control" placeholder="Digite sua senha">
             </div>
+            
+            <!-- Botão de Login -->
             <div class="d-grid">
               <button class="btn btn-primary btn-lg" onclick="login()">Entrar</button>
             </div>
@@ -37,14 +44,20 @@
         <div class="card shadow rounded-4">
           <div class="card-body">
             <h3 class="card-title text-center mb-4">Cadastrar</h3>
+            
+            <!-- Campo Usuário -->
             <div class="mb-3">
               <label for="register-username" class="form-label">Usuário</label>
               <input type="text" id="register-username" class="form-control" placeholder="Digite o nome de usuário">
             </div>
+            
+            <!-- Campo Senha -->
             <div class="mb-3">
               <label for="register-password" class="form-label">Senha</label>
               <input type="password" id="register-password" class="form-control" placeholder="Digite a senha">
             </div>
+            
+            <!-- Seleção de Papel -->
             <div class="mb-3">
               <label for="register-role" class="form-label">Papel</label>
               <select id="register-role" class="form-select">
@@ -52,6 +65,8 @@
                 <option value="admin">Administrador</option>
               </select>
             </div>
+            
+            <!-- Botão de Cadastro -->
             <div class="d-grid">
               <button class="btn btn-success btn-lg" onclick="cadastrar()">Cadastrar</button>
             </div>
@@ -63,12 +78,14 @@
   </div>
 
   <script>
-    const API_URL = 'http://127.0.0.1:8000';
+    const API_URL = 'http://127.0.0.1:8000'; // URL base da API
 
     async function login() {
+      // Pega os valores digitados nos campos de login
       const username = document.getElementById("login-username").value;
       const password = document.getElementById("login-password").value;
 
+      // Faz requisição para login na API
       const res = await fetch(`${API_URL}/autenticar/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -78,19 +95,21 @@
       const data = await res.json();
       if (res.ok) {
         alert("Login realizado com sucesso!");
-        localStorage.setItem("token", data.access_token);
-        localStorage.setItem("role", data.role);
-        window.location.href = 'metricas.html';
+        localStorage.setItem("token", data.access_token); // Armazena token
+        localStorage.setItem("role", data.role); // Armazena papel (user/admin)
+        window.location.href = 'metricas.html'; // Redireciona para painel
       } else {
         alert(data.detail || "Erro no login");
       }
     }
 
     async function cadastrar() {
+      // Pega os valores digitados nos campos de cadastro
       const username = document.getElementById("register-username").value;
       const password = document.getElementById("register-password").value;
       const role = document.getElementById("register-role").value;
 
+      // Faz requisição para cadastro na API
       const res = await fetch(`${API_URL}/autenticar/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -106,7 +125,7 @@
     }
   </script>
 
-  <!-- Bootstrap JS -->
+  <!-- Importa scripts JS do Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
